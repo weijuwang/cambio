@@ -65,6 +65,23 @@ struct cambio* cambio_new(unsigned int num_players, unsigned int first_player, e
     return cambio_init(new_game, num_players, first_player, bottom_left, bottom_right, jokers);
 }
 
+struct cambio* cambio_deepcopy(struct cambio* c) {
+    struct cambio* copy = malloc(sizeof(struct cambio));
+    if (copy == NULL)
+        return NULL;
+
+    memcpy(copy, c, sizeof(struct cambio));
+
+    const int player_cards_size = c->num_players * sizeof(uint8_t[PLAYER_MAX_CARDS]);
+    copy->player_cards = malloc(player_cards_size);
+    if (copy->player_cards == NULL)
+        return NULL;
+
+    memcpy(copy->player_cards, c->player_cards, player_cards_size);
+
+    return copy;
+}
+
 void cambio_cleanup(struct cambio* c) {
     free(c->player_cards);
 }
