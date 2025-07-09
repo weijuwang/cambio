@@ -6,7 +6,6 @@
 #define CAMBIO_H
 
 #include <stdbool.h>
-#include <stdint.h>
 
 #include "card.h"
 
@@ -52,7 +51,13 @@ struct cambio {
      *
      * "Unseen" refers to the fact that we have not seen them, but it is possible that someone else has.
      */
-    uint8_t unseen_freq_table[NUM_CARD_TYPES];
+    card_freq_table unseen_freq_table;
+
+    /**
+     * The discard pile. We need to keep track of these because when the draw deck runs out, the discard pile is shuffled
+     * to become the new draw pile.
+     */
+    card_freq_table discard_pile;
 
     /**
      * A list of all cards belonging to players. Known cards have their values; unknown cards take `UNKNOWN_CARD`.

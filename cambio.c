@@ -28,6 +28,9 @@ struct cambio* cambio_init(struct cambio* c, unsigned int num_players, unsigned 
     // 2 jokers if jokers are being used
     c->unseen_freq_table[JOKER] = jokers ? 2 : 0;
 
+    /* Zero the discard pile freq table */
+    memset(c->discard_pile, 0, sizeof(card_freq_table));
+
     /* Allocate and set `player_cards` */
 
     // Allocate the memory
