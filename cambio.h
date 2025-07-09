@@ -115,9 +115,9 @@ void cambio_cleanup(struct cambio* c);
 void cambio_free(struct cambio* c);
 
 /**
- *
- * @return
+ * The average value of an unseen card. Statistically speaking, this is the value a card has given that you have not seen
+ * its value.
  */
-enum card cambio_avg_unseen(struct cambio* c);
+double cambio_avg_unseen(struct cambio* c);
 
 #endif //CAMBIO_H

@@ -90,3 +90,17 @@ void cambio_free(struct cambio* c) {
     cambio_cleanup(c);
     free(c);
 }
+
+double cambio_avg_unseen(struct cambio* c) {
+    int total = 0;
+    int num_cards = 0;
+
+    // Starts at 1 because null cards should never contribute to the value
+    for (int i = 1; i < NUM_CARD_TYPES; ++i) {
+        const int num_cards_this_type = c->unseen_freq_table[i];
+        total += num_cards_this_type * CARD_VALUES[i];
+        num_cards += num_cards_this_type;
+    }
+
+    return (double) total / num_cards;
+}

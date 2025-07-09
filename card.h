@@ -42,6 +42,9 @@ enum card {
      */
     JOKER,
 
+    /**
+     * The number of card types. This is used as an upper bound in for loops when iterating through card types.
+     */
     NUM_CARD_TYPES
 };
 
