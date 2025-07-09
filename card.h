@@ -46,6 +46,11 @@ enum card {
 };
 
 /**
+ * A table of the values of each card type.
+ */
+extern const int CARD_VALUES[NUM_CARD_TYPES];
+
+/**
  * Finds the number of points a card is worth.
  */
 int card_value(enum card);
