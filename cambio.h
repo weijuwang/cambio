@@ -51,13 +51,13 @@ struct cambio {
      *
      * "Unseen" refers to the fact that we have not seen them, but it is possible that someone else has.
      */
-    card_freq_table unseen_freq_table;
+    card_ftable unseen_freq_table;
 
     /**
      * The discard pile. We need to keep track of these because when the draw deck runs out, the discard pile is shuffled
      * to become the new draw pile.
      */
-    card_freq_table discard_pile;
+    card_ftable discard_pile;
 
     /**
      * A list of all cards belonging to players. Known cards have their values; unknown cards take `UNKNOWN_CARD`.
@@ -118,11 +118,5 @@ void cambio_cleanup(struct cambio* c);
  * **Warning: [cambio_free] already calls [cambio_cleanup]. You do not need to do it yourself.**
  */
 void cambio_free(struct cambio* c);
-
-/**
- * The average value of an unseen card. Statistically speaking, this is the value a card has given that you have not seen
- * its value.
- */
-double cambio_avg_unseen(struct cambio* c);
 
 #endif //CAMBIO_H

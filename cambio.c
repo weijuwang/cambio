@@ -29,7 +29,7 @@ struct cambio* cambio_init(struct cambio* c, unsigned int num_players, unsigned 
     c->unseen_freq_table[JOKER] = jokers ? 2 : 0;
 
     /* Zero the discard pile freq table */
-    memset(c->discard_pile, 0, sizeof(card_freq_table));
+    memset(c->discard_pile, 0, sizeof(card_ftable));
 
     /* Allocate and set `player_cards` */
 
@@ -92,18 +92,4 @@ void cambio_cleanup(struct cambio* c) {
 void cambio_free(struct cambio* c) {
     cambio_cleanup(c);
     free(c);
-}
-
-double cambio_avg_unseen(struct cambio* c) {
-    int total = 0;
-    int num_cards = 0;
-
-    // Starts at 1 because null cards should never contribute to the value
-    for (int i = 1; i < NUM_CARD_TYPES; ++i) {
-        const int num_cards_this_type = c->unseen_freq_table[i];
-        total += num_cards_this_type * CARD_VALUES[i];
-        num_cards += num_cards_this_type;
-    }
-
-    return (double) total / num_cards;
 }
