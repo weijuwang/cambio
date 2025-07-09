@@ -26,7 +26,7 @@ extern const unsigned int START_NUM_CARDS;
  * ### Note about the property [player_cards]
  * I coded this assuming that a player will never have more than [PLAYER_MAX_CARDS] = 7 cards. From the intial 4 cards,
  * one can only accumulate cards through penalties when they stick a card incorrectly. To get to 7 cards would mean that
- * someone incorrectly sticks 3 cards in the same game. I have never seen this happen and
+ * someone incorrectly sticks 3 cards in the same game. I have never seen this happen.
  */
 struct cambio {
     /**
