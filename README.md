@@ -28,7 +28,7 @@ If you chose the first option and the card you discarded was one of the ones bel
 | Black king    | Look at one card of another player. If you wish, you can then swap that card with any one of your own cards. |
 
 #### Ending the game
-During your turn, you may say "Cambio" when you believe you will win the game. After you have called Cambio, everyone else gets one more turn. Everyone then turns over their cards, and adds up the value of their cards. Whoever has the lowest total wins.
+At the beginning of your turn, before you draw a card, you may say "Cambio" when you believe you will win the game. After you have called Cambio, your turn is skipped and everyone else gets one more turn. Everyone then turns over their cards, and adds up the value of their cards. Whoever has the lowest total wins.
 
 #### Sticking
 If someone places a card in the discard pile, you may "stick" that card by taking one of your or anyone's cards that is the same rank and discarding it on top of the discarded card. It does not have to be your turn, but only one person can stick each discarded card. You must stick a discarded card before the next player draws their card. You are allowed to stick your own card.
