@@ -2,13 +2,13 @@
 // Created by Weiju Wang on 7/9/25.
 //
 
-#ifndef STATE
-#define STATE
+#ifndef ACTION_H
+#define ACTION_H
 
 /**
- * Transition between states, i.e. an action that a player can take.
+ *
  */
-enum transition {
+enum action {
     /**
      * Used in contexts where an action is optional.
      */
@@ -60,4 +60,4 @@ enum transition {
     NUM_ACTIONS,
 };
 
-#endif //STATE
+#endif //ACTION_H
