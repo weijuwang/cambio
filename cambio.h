@@ -8,7 +8,6 @@
 #include <stdbool.h>
 
 #include "card.h"
-#include "action.h"
 
 /**
  * The maximum number of cards a player is assumed to be able to have.
