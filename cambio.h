@@ -8,6 +8,7 @@
 #include <stdbool.h>
 
 #include "card.h"
+#include "action.h"
 
 /**
  * The maximum number of cards a player is assumed to be able to have.
@@ -31,19 +32,19 @@ struct cambio {
     /**
      * The number of players in the game.
      */
-    int8_t num_players;
+    unsigned int num_players : 4;
 
     /**
      * The index of the player to move, with 0 being the player from whose perspective the game is being played.
      *
      * If set to -1, the game is over.
      */
-    int8_t turn;
+    int turn : 4;
 
     /**
      * The index of the player who called Cambio. If no one has called it yet then this is -1.
      */
-    int8_t cambio_caller;
+    int cambio_caller : 4;
 
     /**
      * A frequency table of all cards that we have not seen yet. These cards are either in the draw pile or someone's

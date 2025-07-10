@@ -19,13 +19,11 @@ struct cambio* cambio_init(struct cambio* c, unsigned int num_players, unsigned 
     // A-10 each appear 4 times
     for (int i = 1; i < 11; ++i)
         c->unseen_freq_table[i] = 4;
-    // 8 face cards: 4 jacks and 4 queens
-    c->unseen_freq_table[FACE_CARD] = 8;
-    // 2 black kings
+
+    c->unseen_freq_table[JACK] = 4;
+    c->unseen_freq_table[QUEEN] = 4;
     c->unseen_freq_table[B_KING] = 2;
-    // 2 red kings
     c->unseen_freq_table[R_KING] = 2;
-    // 2 jokers if jokers are being used
     c->unseen_freq_table[JOKER] = jokers ? 2 : 0;
 
     /* Zero the discard pile freq table */
@@ -75,7 +73,7 @@ struct cambio* cambio_deepcopy(struct cambio* c) {
 
     memcpy(copy, c, sizeof(struct cambio));
 
-    const int player_cards_size = c->num_players * sizeof(uint8_t[PLAYER_MAX_CARDS]);
+    const unsigned int player_cards_size = c->num_players * sizeof(uint8_t[PLAYER_MAX_CARDS]);
     copy->player_cards = malloc(player_cards_size);
     if (copy->player_cards == NULL)
         return NULL;

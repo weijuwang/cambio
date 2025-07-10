@@ -8,11 +8,16 @@ const int CARD_VALUES[NUM_CARD_TYPES] = {
     [NULL_CARD] = 0,
     [1] = 1, [2] = 2, [3] = 3, [4] = 4, [5] = 5,
     [6] = 6, [7] = 7, [8] = 8, [9] = 9, [10] = 10,
-    [FACE_CARD] = 10,
+    [JACK] = 10,
+    [QUEEN] = 10,
     [B_KING] = 10,
     [R_KING] = -1,
     [JOKER] = 0
 };
+
+bool cards_equal(enum card a, enum card b) {
+    return a == b || (a == B_KING && b == R_KING) || (a == R_KING && b == B_KING);
+}
 
 unsigned int card_ftable_count(const card_ftable ftable) {
     int num_cards = 0;

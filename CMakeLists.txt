@@ -8,4 +8,6 @@ add_executable(cambio main.c
         cambio.h
         card.c
         card.h
+        action.c
+        action.h
 )
