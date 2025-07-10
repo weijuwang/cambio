@@ -25,19 +25,26 @@ struct mcts_node {
      * Child nodes.
      */
     struct mcts_node* children[NUM_ACTIONS];
+
+    /**
+     * The parent of this node. `NULL` if this is the root node.
+     */
+    struct mcts_node* parent;
 };
 
 /**
  * Initializes the fields in an [mcts_node].
+ * @param parent The parent of the initialized node. `NULL` if this is the root node.
  * @return A pointer to the initialized [mcts_node].
  */
-struct mcts_node* mcts_init(struct mcts_node*);
+struct mcts_node* mcts_init(struct mcts_node*, const struct mcts_node* parent);
 
 /**
  * Dynamically allocates and initializes a new [mcts_node].
+ * @param parent The parent of the initialized node. `NULL` if this is the root node.
  * @return The new [mcts_node], or `NULL` if it was unsuccessful.
  */
-struct mcts_node* mcts_new(void);
+struct mcts_node* mcts_new(const struct mcts_node* parent);
 
 /**
  * Recursively frees a dynamically allocated [mcts_node] and all nested children to an indefinite depth.

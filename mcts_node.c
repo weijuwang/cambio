@@ -6,17 +6,18 @@
 
 #include <stdlib.h>
 
-struct mcts_node* mcts_init(struct mcts_node* m) {
+struct mcts_node* mcts_init(struct mcts_node* m, struct mcts_node* parent) {
     m->playouts = 0;
     m->wins = 0;
     for (int i = 0; i < NUM_ACTIONS; ++i)
         m->children[i] = NULL;
+    m->parent = parent;
     return m;
 }
 
-struct mcts_node* mcts_new(void) {
+struct mcts_node* mcts_new(const struct mcts_node* parent) {
     struct mcts_node* m = malloc(sizeof m);
-    return m == NULL ? NULL : mcts_init(m);
+    return m == NULL ? NULL : mcts_init(m, parent);
 }
 
 void mcts_free(struct mcts_node* m) {
