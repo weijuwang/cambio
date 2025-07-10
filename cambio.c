@@ -10,6 +10,8 @@
 const unsigned int START_NUM_CARDS = 4;
 
 struct cambio* cambio_init(struct cambio* c, unsigned int num_players, unsigned int first_player, enum card bottom_left, enum card bottom_right, bool jokers) {
+    const unsigned int num_jokers = jokers ? 2 : 0;
+
     c->num_players = num_players;
     c->turn = first_player;
     c->cambio_caller = -1;
@@ -24,7 +26,9 @@ struct cambio* cambio_init(struct cambio* c, unsigned int num_players, unsigned 
     c->unseen_freq_table[QUEEN] = 4;
     c->unseen_freq_table[B_KING] = 2;
     c->unseen_freq_table[R_KING] = 2;
-    c->unseen_freq_table[JOKER] = jokers ? 2 : 0;
+    c->unseen_freq_table[JOKER] = num_jokers;
+
+    c->draw_pile_size = card_ftable_count(c->unseen_freq_table) - 4 * num_players;
 
     /* Zero the discard pile freq table */
     memset(c->discard_pile, 0, sizeof(card_ftable));

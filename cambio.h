@@ -60,6 +60,12 @@ struct cambio {
     card_ftable discard_pile;
 
     /**
+    * The size of the draw pile. We need to keep track of these because when the draw deck runs out, the discard pile is shuffled
+     * to become the new draw pile.
+     */
+    unsigned int draw_pile_size;
+
+    /**
      * A list of all cards belonging to players. Known cards have their values; unknown cards take `UNKNOWN_CARD`.
      *
      * The first four cards each player is dealt is numbered such that the top left is index 0, the top right is index 1,
