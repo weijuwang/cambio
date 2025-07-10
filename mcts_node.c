@@ -16,7 +16,7 @@ struct mcts_node* mcts_init(struct mcts_node* m, struct mcts_node* parent) {
 }
 
 struct mcts_node* mcts_new(const struct mcts_node* parent) {
-    struct mcts_node* m = malloc(sizeof m);
+    struct mcts_node* m = malloc(sizeof *m);
     return m == NULL ? NULL : mcts_init(m, parent);
 }
 
