@@ -5,7 +5,7 @@
 #ifndef MCTS_NODE_H
 #define MCTS_NODE_H
 
-#include "action.h"
+#include "state.h"
 
 /**
  * A node in open-loop MCTS. Note that this does not ever store the game state.

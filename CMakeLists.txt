@@ -8,8 +8,8 @@ add_executable(cambio main.c
         cambio.h
         card.c
         card.h
-        action.c
-        action.h
+        state.c
+        state.h
         mcts_node.c
         mcts_node.h
 )
