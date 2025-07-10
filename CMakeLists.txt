@@ -10,4 +10,6 @@ add_executable(cambio main.c
         card.h
         action.c
         action.h
+        mcts_node.c
+        mcts_node.h
 )
