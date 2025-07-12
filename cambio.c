@@ -167,7 +167,7 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             c->legal_actions = 1<<DRAW | 1<<STICK;
 
             // Next player can also end the turn now by calling "cambio" if it hasn't been done already
-            if (c->cambio_caller != NO_PLAYER)
+            if (c->cambio_caller == NO_PLAYER)
                 cambio_add_legal_action(c, CAMBIO);
 
             // In addition to the above, the following moves are also legal in the below cases:
@@ -203,7 +203,7 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             c->last_discarded = arg1;
 
             c->legal_actions = 1<<STICK | 1<<DRAW;
-            if (c->cambio_caller != NO_PLAYER)
+            if (c->cambio_caller == NO_PLAYER)
                 cambio_add_legal_action(c, CAMBIO);
             break;
 
