@@ -6,6 +6,7 @@
 
 const struct card_info CARD_INFO[] = {
     [NULL_CARD] = {0, "-"},
+    [UNKNOWN_CARD] = {0, "u"},
     [1] = {1, "1"},
     [2] = {2, "2"},
     [3] = {3, "3"},
