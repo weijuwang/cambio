@@ -6,10 +6,10 @@
 
 #include <stdlib.h>
 
-struct mcts_node* mcts_init(struct mcts_node* m, struct mcts_node* parent) {
+struct mcts_node* mcts_init(struct mcts_node* m, const struct mcts_node* parent) {
     m->playouts = 0;
     m->wins = 0;
-    for (int i = 0; i < NUM_ACTIONS; ++i)
+    for (enum action i = 0; i < NUM_ACTIONS; ++i)
         m->children[i] = NULL;
     m->parent = parent;
     return m;
@@ -21,7 +21,7 @@ struct mcts_node* mcts_new(const struct mcts_node* parent) {
 }
 
 void mcts_free(struct mcts_node* m) {
-    for (int i = 0; i < NUM_ACTIONS; ++i)
+    for (enum action i = 0; i < NUM_ACTIONS; ++i)
         if (m->children[i] != NULL)
             mcts_free(m->children[i]);
     free(m);

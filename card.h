@@ -9,15 +9,12 @@
 #include <stdbool.h>
 
 /**
- * The 14 types of meaningfully unique cards in Cambio. [UNKNOWN], or -1, is a placeholder for any card whose value we
+ * The 15 types of meaningfully unique cards in Cambio. [UNKNOWN], or -1, is a placeholder for any card whose value we
  * don't know. 0 is used for cards that do not exist.
+ *
+ *
  */
 enum card {
-    /**
-     * Stand-in for an unknown card.
-     */
-    UNKNOWN_CARD = -1,
-
     /**
      * Stand-in for a null card.
      */
@@ -53,7 +50,12 @@ enum card {
     /**
      * The number of card types. This is used as an upper bound in for loops when iterating through card types.
      */
-    NUM_CARD_TYPES
+    NUM_CARD_TYPES,
+
+    /**
+     * Stand-in for an unknown card.
+     */
+    UNKNOWN_CARD,
 };
 
 /**
