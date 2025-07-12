@@ -62,7 +62,7 @@ struct cambio {
     /**
      * Flags indicating which actions are legal. If there are no legal actions, the game is over.
      */
-    unsigned int legal_actions : 4;
+    unsigned int legal_actions : NUM_ACTIONS;
 
     /**
      * The last card that was drawn, if any and if known, otherwise `NULL_CARD` or `UNKNOWN_CARD`.

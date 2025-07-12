@@ -22,9 +22,10 @@ const struct command_info COMMAND_INFO[] = {
 void cambio_print(const struct cambio* c) {
     printf("turn %i/%i, cambio %i, %i to draw, %s drawn, %s disc'd. ", c->turn, c->num_players, c->cambio_caller,
            c->draw_pile_size, CARD_INFO[c->drawn_card].shorthand, CARD_INFO[c->last_discarded].shorthand);
-    for (enum action i = 0; i < NUM_ACTIONS; ++i)
+    for (enum action i = 0; i < NUM_ACTIONS; ++i) {
         if (c->legal_actions & 1<<i)
             printf("%s(%s) ", COMMAND_INFO[i].name, COMMAND_INFO[i].command);
+    }
     putchar('\n');
     for (enum player p = 0; p < c->num_players; ++p) {
         putchar('[');
