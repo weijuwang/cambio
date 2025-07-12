@@ -215,7 +215,7 @@ void cambio_do_action(struct cambio* c, enum action a, const int arg0, const int
             break;
 
         case PEEK_OWN:
-            cambio_peek_own(c, arg1, arg0);
+            cambio_peek(c, c->turn, arg1, arg0);
             cambio_remove_legal_action(c, PEEK_OWN);
             break;
 

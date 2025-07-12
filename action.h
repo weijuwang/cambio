@@ -43,9 +43,9 @@ enum action {
     BLIND_SWITCH,
 
     /**
-     * Peek one of our own cards.
+     * The player to move peeks one of their cards.
      *
-     * arg0 is the peeked-at card.
+     * arg0 is the peeked-at card if known, or `UNKNOWN_CARD`.
      * arg1 is the index of the peeked-at card.
      */
     PEEK_OWN,
