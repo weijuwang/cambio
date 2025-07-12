@@ -64,9 +64,19 @@ enum card {
 typedef uint8_t card_ftable[NUM_CARD_TYPES];
 
 /**
- * A table of the values of each card type.
+ * A table of information about each card type.
  */
-extern const int CARD_VALUES[NUM_CARD_TYPES];
+extern const struct card_info {
+    /**
+     * The number of points this card is worth.
+     */
+    int value;
+
+    /**
+     *
+     */
+    char* shorthand;
+} CARD_INFO[];
 
 /**
  * Determines whether two cards are the same.
