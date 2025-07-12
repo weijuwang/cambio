@@ -12,4 +12,6 @@ add_executable(cambio main.c
         action.h
         mcts_node.c
         mcts_node.h
+        cli.c
+        cli.h
 )

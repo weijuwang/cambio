@@ -110,16 +110,16 @@ void cambio_remove_from_unseen(struct cambio* c, const enum card card) {
         -- c->unseen_ftable[card];
 }
 
-void cambio_peek(struct cambio* c, enum player p, unsigned int position, enum card card) {
+void cambio_peek(struct cambio* c, const enum player p, const unsigned int position, const enum card card) {
     cambio_remove_from_unseen(c, card);
     c->player_cards[p][position] = card;
 }
 
-void cambio_peek_own(struct cambio* c, unsigned int position, enum card card) {
+void cambio_peek_own(struct cambio* c, const unsigned int position, const enum card card) {
     cambio_peek(c, 0, position, card);
 }
 
-void cambio_do_action(struct cambio* c, enum action a, const int arg0, const int arg1, const int arg2, const int arg3) {
+void cambio_do_action(struct cambio* c, const enum action a, const int arg0, const int arg1, const int arg2, const int arg3) {
     switch (a) {
         case DRAW:
             cambio_inc_turn(c);

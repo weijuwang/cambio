@@ -51,6 +51,49 @@ The point values of cards 2-10 are the same as their rank. Other cards' point va
 | Red king              | -1    |
 | Joker                 | 0     |
 
+## REPL
+The command-line interface uses extremely short commands designed to minimize the number of keystrokes. There are three types of commands, each of which are given a sub-section below.
+
+### Game commands
+These are the most important; they tell the CLI that something happened in-game. The game state will automatically update based on the information you tell the CLI.
+
+Each command name is one character. If arguments are given, the first one begins immediately after the name of the command with no space required. Arguments are separated by spaces.
+
+When an argument is a card value, use the following format:
+
+| Card       | Format |
+|------------|--------|
+| Ace        | a      |
+| 2          | 2      |
+| 3          | 3      |
+| ...        | ...    |
+| Jack       | j      |
+| Queen      | q      |
+| Black king | bk     |
+| Red king   | rk     |
+| Joker      | 0      |
+
+When an argument is a player, type the index of that player. You are always player 0; the person who goes after you is player 1, and the person after that player 2, etc.
+
+When an argument is a specific card in someone's hand, type the index of that card. At the beginning of the game, a player's cards are numbered 0-3 -- the top left, top right, bottom left, and bottom right cards, respectively. This numbering of cards doesn't necessarily match how the cards are arranged in a real game and you must keep track of which indices correspond to which cards.
+
+The commands are below. Arguments in brackets are required; arguments in parentheses are optional.
+
+| Command name | Arguments                     | Description                                                                                                                |
+|--------------|-------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `+`          | `(cardDrawn)`                 | Ends the current turn and then draws a card for the next player whose turn it is if the game is not over.                  |
+| `-`          | `(cardDiscarded)`             | Discards the card that was just drawn. `cardDiscarded` is required if `cardDrawn` was not specified when drawing the card. |
+| `x`           | `[position]` `[cardDiscarded]` |                                                                                                                            |
+|              |                               |                                                                                                                            |
+|              |                               |                                                                                                                            |
+|              |                               |                                                                                                                            |
+|              |                               |                                                                                                                            |
+|              |                               |                                                                                                                            |
+|              |                               |                                                                                                                            |
+
+
+###
+
 ## Monte Carlo tree search
 Because of the large branching factor of Cambio, I used an [open-loop Monte Carlo tree search](https://ai.stackexchange.com/questions/13867/mcts-for-non-deterministic-games-with-very-high-branching-factor-for-chance-node) with [UCT](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation) to determine the best action at any point. Closed-loop (traditional) Monte Carlo tree search is not feasible because the branching factor for each turn is over 1000. For more about open-loop MCTS, read (this paper)[http://www.diego-perez.net/papers/OpenLoopGVG.pdf].
 
