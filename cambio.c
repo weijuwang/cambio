@@ -348,3 +348,14 @@ bool cambio_at_least_one_player_has_cards(const struct cambio* c) {
     }
     return false;
 }
+
+enum card cambio_rand_from_unseen(const struct cambio* c) {
+    int index = rand() % card_ftable_count(c->unseen_ftable); // NOLINT(cert-msc30-c, cert-msc50-cpp)
+    for (enum card card = 1; card < NUM_CARD_TYPES; ++card) {
+        index -= c->unseen_ftable[card];
+        if (index < 0)
+            return card;
+    }
+
+    return NUM_CARD_TYPES;
+}

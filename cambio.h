@@ -250,4 +250,12 @@ void cambio_if_at_least_two_players_have_cards_add_blind_switch(const struct cam
  */
 bool cambio_at_least_one_player_has_cards(const struct cambio*);
 
+/**
+ * Picks a random card from the unseen_ftable, taking into account the frequencies of each card. This card is not removed from
+ * the draw pile or anything like that -- no state is affected.
+ *
+ * If it returns `NUM_CARD_TYPES` then something has gone wrong, probably a bug in my code.
+ */
+enum card cambio_rand_from_unseen(const struct cambio*);
+
 #endif //CAMBIO_H
