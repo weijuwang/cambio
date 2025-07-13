@@ -75,7 +75,6 @@ enum action {
      *
      * arg0 is the player who stuck the card.
      * arg1 is the index of the card that was stuck.
-     * If `arg0 == c->turn`, arg3 is the original index of the card that the player who stuck the card is giving away.
      */
     STICK,
 

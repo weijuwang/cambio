@@ -5,7 +5,7 @@
 #ifndef CLI_H
 #define CLI_H
 
-#include "cambio.h"
+#include "mcts_node.h"
 
 /**
  * Information about a command.
@@ -19,5 +19,10 @@ const struct command_info {
  * Print information about a cambio state.
  */
 void cambio_print(const struct cambio*);
+
+/**
+ * Recursively prints an MCTS node in JSON.
+ */
+void mcts_print(const struct mcts_node*);
 
 #endif //CLI_H

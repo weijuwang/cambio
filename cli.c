@@ -36,3 +36,19 @@ void cambio_print(const struct cambio* c) {
     }
     putchar('\n');
 }
+
+void mcts_print(const struct mcts_node* m) {
+    if (m == NULL) {
+        printf("null");
+        return;
+    }
+
+    printf("{\"playouts\":%i,\"wins\":%i,\"children\":{", m->playouts, m->wins);
+    for (enum action i = 0; i < NUM_ACTIONS; ++i) {
+        printf("\"%s\":", COMMAND_INFO[i].name);
+        mcts_print(m->children[i]);
+        if (i != NUM_ACTIONS - 1)
+            putchar(',');
+    }
+    puts("}}");
+}
