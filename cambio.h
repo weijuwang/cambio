@@ -250,6 +250,4 @@ void cambio_if_at_least_two_players_have_cards_add_blind_switch(const struct cam
  */
 bool cambio_at_least_one_player_has_cards(const struct cambio*);
 
-// TODO cambio determine winner
-
 #endif //CAMBIO_H
