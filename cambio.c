@@ -101,7 +101,7 @@ void cambio_free(struct cambio* c) {
 
 void cambio_inc_turn(struct cambio* c) {
     if (++c->turn == c->num_players)
-        c->turn == 0;
+        c->turn = 0;
 }
 
 void cambio_add_legal_action(struct cambio* c, const enum action a) {
