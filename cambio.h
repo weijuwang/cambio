@@ -61,6 +61,9 @@ struct cambio {
 
     /**
      * Flags indicating which actions are legal. If there are no legal actions, the game is over.
+     *
+     * Since we don't necessarily know all the cards, an action is said to be "legal" if, given the right cards in the
+     * right places, it would be possible to perform this action.
      */
     unsigned int legal_actions : NUM_ACTIONS;
 
@@ -132,10 +135,18 @@ struct cambio* cambio_init(struct cambio* c, unsigned int num_players, enum play
 struct cambio* cambio_new(unsigned int num_players, enum player first_player, enum card bottom_left, enum card bottom_right, bool jokers);
 
 /**
- * Deep-copies a Cambio game state.
+ * Deep-copies a Cambio game state into a newly allocated cambio game state, which the caller must free later.
  * @return A deep copy of `c`.
  */
-struct cambio* cambio_deepcopy(const struct cambio* c);
+struct cambio* cambio_dynamic_deepcopy(const struct cambio* c);
+
+/**
+ * Deep-copies a Cambio game state.
+* @param dest The destination of the copy.
+ * @param c The struct to copy.
+ * @return Whether the copy was successful.
+ */
+bool cambio_static_deepcopy(struct cambio* dest, const struct cambio* c);
 
 /**
  * Cleans up any pointers allocated by [cambio_init]. This is for [cambio] structs that were not dynamically allocated
@@ -216,5 +227,29 @@ enum card cambio_remove_player_card(struct cambio*, enum player, unsigned int in
  * @param arg3 The fourth argument.
  */
 void cambio_do_action(struct cambio* c, enum action a, int arg0, int arg1, int arg2, int arg3);
+
+/**
+ * Finds the number of cards a player has.
+ */
+unsigned int cambio_player_num_cards(const struct cambio*, enum player);
+
+/**
+ * Determines whether at least one player who isn't `c->turn` has cards.
+ *
+ * The name is descriptive because it's only used twice internally in `cambio_do_action`.
+ */
+bool cambio_at_least_one_player_not_turn_has_cards(const struct cambio*);
+
+/**
+ * Self-descriptive.
+ */
+void cambio_if_at_least_two_players_have_cards_add_blind_switch(const struct cambio*);
+
+/**
+ * Self-descriptive.
+ */
+bool cambio_at_least_one_player_has_cards(const struct cambio*);
+
+// TODO cambio determine winner
 
 #endif //CAMBIO_H

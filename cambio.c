@@ -66,21 +66,28 @@ struct cambio* cambio_new(const unsigned int num_players, const enum player firs
     return cambio_init(new_game, num_players, first_player, bottom_left, bottom_right, jokers);
 }
 
-struct cambio* cambio_deepcopy(const struct cambio* c) {
+struct cambio* cambio_dynamic_deepcopy(const struct cambio* c) {
     struct cambio* copy = malloc(sizeof(struct cambio));
     if (copy == NULL)
         return NULL;
 
-    memcpy(copy, c, sizeof(struct cambio));
+    if (cambio_static_deepcopy(c, copy))
+        return copy;
+
+    return NULL;
+}
+
+bool cambio_static_deepcopy(struct cambio* dest, const struct cambio* c) {
+    memcpy(dest, c, sizeof(struct cambio));
 
     const unsigned int player_cards_size = c->num_players * sizeof(uint8_t[PLAYER_MAX_CARDS]);
-    copy->player_cards = malloc(player_cards_size);
-    if (copy->player_cards == NULL)
-        return NULL;
+    dest->player_cards = malloc(player_cards_size);
+    if (dest->player_cards == NULL)
+        return false;
 
-    memcpy(copy->player_cards, c->player_cards, player_cards_size);
+    memcpy(dest->player_cards, c->player_cards, player_cards_size);
 
-    return copy;
+    return true;
 }
 
 void cambio_cleanup(const struct cambio* c) {
@@ -145,7 +152,9 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             -- c->draw_pile_size;
             cambio_remove_from_unseen(c, arg0);
 
-            c->legal_actions = 1<<DISCARD | 1<<SWAP;
+            c->legal_actions = 1<<DISCARD;
+            if (cambio_player_num_cards(c, c->turn) > 0)
+                cambio_add_legal_action(c, SWAP);
             break;
 
         case DISCARD:
@@ -164,7 +173,10 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             /* LEGAL ACTIONS */
 
             // Next player can always end the turn now by drawing
-            c->legal_actions = 1<<DRAW | 1<<STICK;
+            c->legal_actions = 1<<DRAW;
+
+            if (cambio_at_least_one_player_has_cards(c))
+                cambio_add_legal_action(c, STICK);
 
             // Next player can also end the turn now by calling "cambio" if it hasn't been done already
             if (c->cambio_caller == NO_PLAYER)
@@ -174,21 +186,24 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             switch (discarded) {
                 case 7:
                 case 8:
-                    cambio_add_legal_action(c, PEEK_OWN);
+                    if (cambio_player_num_cards(c, c->turn) > 0)
+                        cambio_add_legal_action(c, PEEK_OWN);
                     break;
 
                 case 9:
                 case 10:
-                    cambio_add_legal_action(c, PEEK_OTHER);
+                    if (cambio_at_least_one_player_not_turn_has_cards(c))
+                        cambio_add_legal_action(c, PEEK_OTHER);
                     break;
 
                 case JACK:
                 case QUEEN:
-                    cambio_add_legal_action(c, BLIND_SWITCH);
+                    cambio_if_at_least_two_players_have_cards_add_blind_switch(c);
                     break;
 
                 case B_KING:
-                    cambio_add_legal_action(c, B_KING_PEEK);
+                    if (cambio_at_least_one_player_not_turn_has_cards(c))
+                        cambio_add_legal_action(c, B_KING_PEEK);
                     break;
 
                 default:
@@ -202,7 +217,11 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             ++ c->discard_ftable[arg1];
             c->last_discarded = arg1;
 
-            c->legal_actions = 1<<STICK | 1<<DRAW;
+            c->legal_actions = 1<<DRAW;
+
+            if (cambio_at_least_one_player_has_cards(c))
+                cambio_add_legal_action(c, STICK);
+
             if (c->cambio_caller == NO_PLAYER)
                 cambio_add_legal_action(c, CAMBIO);
             break;
@@ -227,7 +246,7 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
         case B_KING_PEEK:
             cambio_peek(c, arg2, arg1, arg0);
             cambio_remove_legal_action(c, PEEK_OTHER);
-            cambio_add_legal_action(c, BLIND_SWITCH);
+            cambio_if_at_least_two_players_have_cards_add_blind_switch(c);
             break;
 
         case STICK:
@@ -251,7 +270,7 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             }
 
             /* If the player stuck their own card... */
-            if (arg0 == c->turn)
+            if (arg0 == c->turn && cambio_player_num_cards(c, c->turn) > 0)
                 cambio_add_legal_action(c, GIVE_AWAY);
 
             cambio_remove_legal_action(c, STICK);
@@ -292,4 +311,40 @@ void cambio_do_action(struct cambio* c, const enum action a, const int arg0, con
             // Unrecognized action
             break;
     }
+}
+
+unsigned int cambio_player_num_cards(const struct cambio* c, const enum player p) {
+    for (int i = 0; i < PLAYER_MAX_CARDS; ++i) {
+        if (c->player_cards[p][i] == NULL_CARD)
+            return i;
+    }
+    return PLAYER_MAX_CARDS;
+}
+
+bool cambio_at_least_one_player_not_p_has_cards(const struct cambio* c) {
+    for (enum player p = 0; p < c->num_players; ++p) {
+        if (p != c->turn && cambio_player_num_cards(c, p) > 0)
+            return true;
+    }
+    return false;
+}
+
+void cambio_if_at_least_two_players_have_cards_add_blind_switch(const struct cambio* c) {
+    unsigned int num_players_with_cards = 0;
+    for (enum player p = 0; p < c->num_players; ++p) {
+        if (cambio_player_num_cards(c, p) > 0) {
+            ++ num_players_with_cards;
+            if (num_players_with_cards >= 2) {
+                cambio_add_legal_action(c, BLIND_SWITCH);
+            }
+        }
+    }
+}
+
+bool cambio_at_least_one_player_has_cards(const struct cambio* c) {
+    for (enum player p = 0; p < c->num_players; ++p) {
+        if (cambio_player_num_cards(c, p) > 0)
+            return true;
+    }
+    return false;
 }
