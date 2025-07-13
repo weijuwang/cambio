@@ -321,7 +321,7 @@ unsigned int cambio_player_num_cards(const struct cambio* c, const enum player p
     return PLAYER_MAX_CARDS;
 }
 
-bool cambio_at_least_one_player_not_p_has_cards(const struct cambio* c) {
+bool cambio_at_least_one_player_not_turn_has_cards(const struct cambio* c) {
     for (enum player p = 0; p < c->num_players; ++p) {
         if (p != c->turn && cambio_player_num_cards(c, p) > 0)
             return true;
